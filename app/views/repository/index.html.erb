@@ -1,4 +1,4 @@
 <% @repos.each do |repo| %>
-  <%= repo['name'] %> &nbsp; <%= repo['description'] %>
+  <%= link_to repo['name'], repository_path(repo['name']) %> &nbsp; <%= repo['description'] %>
   <br />
 <% end %>

@@ -1,5 +1,17 @@
 class RepositoryController < ApplicationController
-    def index
-      @repos = Repository.all_for_user(current_user)
-    end
+  before_action :set_repository
+
+  def index
+    @repos = @repository.list
+  end
+
+  def show
+    @repo = @repository.detail(params[:name])
+  end
+
+  private
+
+  def set_repository
+    @repository = Repository.new(current_user)
+  end
 end

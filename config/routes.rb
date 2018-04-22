@@ -4,7 +4,6 @@ Rails.application.routes.draw do
     get 'authorize'
     get 'callback'
   end
-  resources :repository, only: [:index]
-  resource :repository, only: [:index]
+  resources :repository, only: [:index, :show], param: :name
   root 'repository#index'
 end
