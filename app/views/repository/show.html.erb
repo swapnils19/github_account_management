@@ -1,3 +1,9 @@
 Name: <%= @repo.name %>
 <br />
 Description: <%= @repo.description %>
+<br />
+Commits:
+<% @commits.each do |commit| %>
+    <%= commit['commit']['message'] %> &nbsp; &nbsp; <%= commit['commit']['committer']['email'] %>  &nbsp; &nbsp; <%= commit['commit']['committer']['date'].to_date %>
+    <br />
+<% end %>

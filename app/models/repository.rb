@@ -11,6 +11,10 @@ class Repository
     remote_repos(name).get.body
   end
 
+  def commits(name)
+    remote_repos(name).commits.list.body
+  end
+
   private
 
   def remote_repos(name = '')

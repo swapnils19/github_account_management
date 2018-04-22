@@ -7,6 +7,7 @@ class RepositoryController < ApplicationController
 
   def show
     @repo = @repository.detail(params[:name])
+    @commits = @repository.commits(params[:name])
   end
 
   private
