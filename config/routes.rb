@@ -5,6 +5,6 @@ Rails.application.routes.draw do
     get 'callback'
   end
   resources :repository, only: [:index]
-  resource :user, only: [:show]
-  root 'user#show'
+  resource :repository, only: [:index]
+  root 'repository#index'
 end

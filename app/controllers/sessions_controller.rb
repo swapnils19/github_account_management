@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate
-  def new; end
+  def new
+    redirect_to controller: :repository, action: :index if current_user.present?
+  end
 
   def authorize
     address = github.authorize_url
@@ -12,7 +14,7 @@ class SessionsController < ApplicationController
     access_token = github.get_token(authorization_code)
     github(oauth_token: access_token.token)
     set_user
-    redirect_to controller: :user, action: :show
+    redirect_to controller: :repository, action: :index
   end
 
   private

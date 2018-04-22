@@ -10,6 +10,9 @@
   </head>
 
   <body>
+    <% if @current_user.present? %>
+      <h2>Welcome <%= @current_user.github_name %></h2>
+    <% end %>
     <%= yield %>
   </body>
 </html>

@@ -10,9 +10,7 @@ class ApplicationController < ActionController::Base
     if @github.present?
       @github.oauth_token = oauth_token if @github.oauth_token.blank?
     else
-      @github ||= Github.new(client_id: ENV['GITHUB_CLIENT_ID'],
-                             client_secret: ENV['GITHUB_CLIENT_SECRET'],
-                             oauth_token: oauth_token)
+      @github ||= GithubService.new(oauth_token).client
     end
     @github
    end
