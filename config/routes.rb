@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
-  resource :session, only: [] do
+  resource :session, only: [:destroy] do
     get 'authorize'
     get 'callback'
   end

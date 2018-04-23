@@ -17,6 +17,11 @@ class SessionsController < ApplicationController
     redirect_to controller: :repository, action: :index
   end
 
+  def destroy
+    sign_out
+    redirect_to login_path
+  end
+
   private
 
   def set_user
@@ -27,5 +32,10 @@ class SessionsController < ApplicationController
     user.github_details = git_user_details
     user.save
     session[:user_id] = user.id
+  end
+
+  def sign_out
+    session.delete(:user_id)
+    @current_user = nil
   end
 end

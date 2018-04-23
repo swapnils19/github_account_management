@@ -9,7 +9,10 @@
             </li>
             <li class="divider"></li>
             <li>
-                <a><i class="fa fa-sign-out fa-fw"></i> Logout </a>
+                <%= link_to session_path, method: :delete do %>
+                    <i class="fa fa-sign-out fa-fw"></i>
+                    Sign Out
+                <% end %>
             </li>
         </ul>
         <!-- /.dropdown-user -->

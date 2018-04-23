@@ -1,0 +1,36 @@
+<div class="row p-t-10">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Commits in the Repository (Total <%= @commits.size %> commits)
+            </div>
+            <!-- .panel-heading -->
+
+            <div class='panel-body'>
+                <% @commits.each do |commit| %>
+                    <div class="col-lg-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-body">
+                                <p><%= commit['commit']['message'] %></p>
+                            </div>
+                            <div class="panel-footer">
+                                <p>
+                                    <small class="text-muted">
+                                        <i class="fa fa-github"></i>
+                                        <%= commit['commit']['committer']['name'] %> commited <%= time_ago_in_words(commit['commit']['committer']['date']) %> ago
+                                    </small>
+                                    <br />
+                                    <small class="text-muted">
+                                        <i class="fa fa-comment"></i>
+                                        Total Comments: <%= commit['commit']['comment_count'] %>
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <!-- .panel-heading -->
+        </div>
+    </div>
+</div>

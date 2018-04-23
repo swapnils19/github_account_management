@@ -1,9 +1,32 @@
-Name: <%= @repo.name %>
-<br />
-Description: <%= @repo.description %>
-<br />
-Commits:
-<% @commits.each do |commit| %>
-    <%= commit['commit']['message'] %> &nbsp; &nbsp; <%= commit['commit']['committer']['email'] %>  &nbsp; &nbsp; <%= commit['commit']['committer']['date'].to_date %>
-    <br />
-<% end %>
+<div class="row p-t-10">
+    <div class="col-lg-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <%= @repo.name %>
+            </div>
+            <div class="panel-body">
+                <%= @repo.description.present? ? @repo.description : 'Description for this repository is not given.' %>
+            </div>
+            <div class="panel-footer">
+                <p>
+                    <small class="text-muted">
+                        <i class="fa fa-clock-o"></i>
+                        Pushed <%= time_ago_in_words(@repo['pushed_at']) %> ago
+                    </small>
+                    <br />
+                    <small class="text-muted">
+                        <i class="fa fa-star"></i>
+                        Stars: <%= @repo['stargazers_count'] %>
+                    </small>
+                    <br />
+                    <small class="text-muted">
+                        <i class="fa fa-eye"></i>
+                        Watchers: <%= @repo['watchers_count'] %>
+                    </small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%= render 'commits' %>
