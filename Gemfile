@@ -71,4 +71,6 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether'
 end
 
+gem 'bootstrap3-datetimepicker-rails'
 gem "font-awesome-rails"
+gem 'momentjs-rails'

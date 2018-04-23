@@ -1,0 +1,46 @@
+<div class="row">
+    <div class='col-sm-4'>
+        <div class="form-group">
+            <div class='input-group date' id='fromDate'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group">
+            <div class='input-group date' id='toDate'>
+                <input type='text' class="form-control" />
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" onClick="submitDates()">Apply Filter</button>
+
+    <div class="col-lg-12 chart">
+    </div>
+</div>
+    
+    <style>
+        .axis {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+    </style>
+
+    <script>
+        initDatePickers();
+        initChart();
+    </script>

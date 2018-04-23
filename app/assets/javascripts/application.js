@@ -16,4 +16,8 @@
 //= require jquery3
 //= require tether
 //= require bootstrap
+//= require moment
+//= require bootstrap-datetimepicker
+//= require vendor/d3.min
 //= require_tree .
+

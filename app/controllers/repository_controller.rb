@@ -10,6 +10,10 @@ class RepositoryController < ApplicationController
     @commits = @repository.commits(params[:name])
   end
 
+  def d3_graph
+    render 'd3_calendar'
+  end
+
   private
 
   def set_repository
