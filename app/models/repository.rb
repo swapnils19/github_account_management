@@ -19,6 +19,7 @@ class Repository
 
   def remote_repos(name = '')
     github = GithubService.new.client
-    github.repos(user: @user.github_name, repo: name)
+    # sorting not working in the Gem
+    github.repos(user: @user.github_name, repo: name, sort: 'pushed', direction: 'desc')
   end
 end

@@ -11,8 +11,14 @@
 
   <body>
     <% if @current_user.present? %>
-      <h2>Welcome <%= @current_user.github_name %></h2>
+      <div id="wrapper">
+        <%= render 'layouts/navigations' %>
+        <div id="page-wrapper">
     <% end %>
     <%= yield %>
+    <% if @current_user.present? %>
+        </div>
+      </div>
+    <% end %>
   </body>
 </html>

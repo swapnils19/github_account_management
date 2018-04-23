@@ -1,4 +1,50 @@
-<% @repos.each do |repo| %>
-  <%= link_to repo['name'], repository_path(repo['name']) %> &nbsp; <%= repo['description'] %>
-  <br />
-<% end %>
+<%# @repos.each do |repo| %>
+  <%#= link_to repo['name'], repository_path(repo['name']) %> <%#= repo['description'] %>
+<%# end %>
+
+<!-- /.panel -->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa fa-clock-o fa-fw"></i>
+        Your Repositories
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <ul class="timeline">
+            <% @repos.each_with_index do |repo, index|
+                li_class = index.odd? ? 'timeline-inverted' : ''
+            %>
+                <li class="<%= li_class %>" index="<%= index %>">
+                    <div class="timeline-badge"><i class="fa fa-credit-card"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <%= link_to repo['name'], repository_path(repo['name']) %>
+                            <p>
+                                <small class="text-muted">
+                                    <i class="fa fa-clock-o"></i>
+                                    Pushed <%= time_ago_in_words(repo['pushed_at']) %> ago
+                                </small>
+                                <br />
+                                <small class="text-muted">
+                                    <i class="fa fa-star"></i>
+                                    Stars: <%= repo['stargazers_count'] %>
+                                </small>
+                                <br />
+                                <small class="text-muted">
+                                    <i class="fa fa-eye"></i>
+                                    Watchers: <%= repo['watchers_count'] %>
+                                </small>
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <%= repo['description'] %>
+                        </div>
+                    </div>
+                </li>
+            <% end %>
+        </ul>
+    </div>
+    <!-- /.panel-body -->
+</div>
+<!-- /.panel -->
