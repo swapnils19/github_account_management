@@ -2,7 +2,7 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 	<div class="navbar-header">
 		<%= image_tag(@current_user.github_details['avatar_url'], class: 'navbar-brand navbar-icon') %>
-		<span class="navbar-brand"> <%= @current_user.github_name %> </span>
+		<span class="navbar-brand"> <%= t('greeting') %>, <%= @current_user.github_name %> </span>
 	</div>
 	<!-- /.navbar-header -->
 

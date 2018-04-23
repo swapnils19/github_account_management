@@ -30,4 +30,27 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  greeting: "Hi"
+  ago: "ago"
+  sign_in: "Please Sign In"
+  sign_out: "Sign Out"
+  signin_github: "Sign In with Github"
+
+  repositories:
+    title: "Repositories"
+    your_repositories: "Your Repositories"
+    pushed: "Pushed"
+    stars: "Stars"
+    wathcers: "Watchers"
+
+    commits:
+      commited: "commited"
+      total_comments: "Total Comments"
+      total_commits: "Total %{count} Commits"
+      commits_in_repo: "Commits in the Repository"
+
+    errors:
+      no_repository: "Repositories not found. Please create a Repository in your Github account."
+      no_description: "Description for this Repository is not given."
+
+

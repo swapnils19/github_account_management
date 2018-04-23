@@ -5,23 +5,23 @@
                 <%= @repo.name %>
             </div>
             <div class="panel-body">
-                <%= @repo.description.present? ? @repo.description : 'Description for this repository is not given.' %>
+                <%= @repo.description.present? ? @repo.description : t('repositories.errors.no_description') %>
             </div>
             <div class="panel-footer">
                 <p>
                     <small class="text-muted">
                         <i class="fa fa-clock-o"></i>
-                        Pushed <%= time_ago_in_words(@repo['pushed_at']) %> ago
+                        <%= t('repositories.pushed') %> <%= time_ago_in_words(@repo['pushed_at']) %> <%= t('ago') %>
                     </small>
                     <br />
                     <small class="text-muted">
                         <i class="fa fa-star"></i>
-                        Stars: <%= @repo['stargazers_count'] %>
+                        <%= t('repositories.stars') %>: <%= @repo['stargazers_count'] %>
                     </small>
                     <br />
                     <small class="text-muted">
                         <i class="fa fa-eye"></i>
-                        Watchers: <%= @repo['watchers_count'] %>
+                        <%= t('repositories.watchers') %>: <%= @repo['watchers_count'] %>
                     </small>
                 </p>
             </div>

@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Commits in the Repository (Total <%= @commits.size %> commits)
+                <%= t('repositories.commits.commits_in_repo') %> (<%= t('repositories.commits.total_commits', count: @commits.size) %>)
             </div>
             <!-- .panel-heading -->
 
@@ -17,12 +17,12 @@
                                 <p>
                                     <small class="text-muted">
                                         <i class="fa fa-github"></i>
-                                        <%= commit['commit']['committer']['name'] %> commited <%= time_ago_in_words(commit['commit']['committer']['date']) %> ago
+                                        <%= commit['commit']['committer']['name'] %> <%= t('repositories.commits.commited') %> <%= time_ago_in_words(commit['commit']['committer']['date']) %> <%= t('ago') %>
                                     </small>
                                     <br />
                                     <small class="text-muted">
                                         <i class="fa fa-comment"></i>
-                                        Total Comments: <%= commit['commit']['comment_count'] %>
+                                        <%= t('repositories.commits.total_comments') %>: <%= commit['commit']['comment_count'] %>
                                     </small>
                                 </p>
                             </div>
