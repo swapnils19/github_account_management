@@ -1,24 +1,3 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- This app demonstrate a sample application to consume `Github` public APIs.
+- The [`github_api`](https://github.com/piotrmurach/github) ruby gem has been used to implement APIs in the application.
+- Live App on [`Heroku`](https://github-account-management.herokuapp.com).
