@@ -102,22 +102,22 @@ debugger
 // }
 function initChart() {
     var temperatures = [
-        { temp: 32, month: 'January' },
-        { temp: 38, month: 'February' },
-        { temp: 47, month: 'March' },
-        { temp: 59, month: 'April' },
-        { temp: 70, month: 'May' },
-        { temp: 80, month: 'June' },
-        { temp: 84, month: 'July' },
-        { temp: 83, month: 'Auguest' },
-        { temp: 76, month: 'September' },
-        { temp: 64, month: 'October' },
-        { temp: 49, month: 'November' },
-        { temp: 37, month: 'December' }
+        { temp: 32, onDate: '2011-04-14T16:00:49Z' },
+        { temp: 38, onDate: '2011-04-15T16:00:49Z' },
+        { temp: 47, onDate: '2011-04-16T16:00:49Z' },
+        { temp: 59, onDate: '2011-04-17T16:00:49Z' },
+        { temp: 70, onDate: '2011-04-18T16:00:49Z' },
+        { temp: 80, onDate: '2011-04-19T16:00:49Z' },
+        { temp: 84, onDate: '2011-04-11T16:00:49Z' },
+        { temp: 83, onDate: '2011-04-12T16:00:49Z' },
+        { temp: 76, onDate: '2011-04-13T16:00:49Z' },
+        { temp: 64, onDate: '2011-04-10T16:00:49Z' },
+        { temp: 49, onDate: '2011-04-20T16:00:49Z' },
+        { temp: 99, onDate: '2011-04-21T16:00:49Z' }
     ];
 
     var months = temperatures.map(function (t) {
-        return t.month
+        return new Date(t.onDate);
     });
 
     var margin = {
@@ -140,10 +140,12 @@ function initChart() {
                 .append('g')
                 .attr('transform', 'translate('+ margin.left + ',' + margin.top + ')');
 
-    var monthScale = d3.scaleBand()
-                       .domanin(months)
-                       .range([0, width])
-                       .paddingInner(0.1);
+    // Vertical bars
+    // var monthScale = d3.scaleBand()
+    var monthScale = d3.scaleTime()
+                       .domain(months)
+                       .range([0, width]);
+                    //    .paddingInner(0.1);
 
     var tempScale = d3.scaleLinear()
                       .domain([0, d3.max(temperatures, function(d) {
@@ -151,5 +153,47 @@ function initChart() {
                       })])
                       .range([height, 0])
                       .nice();
-}
 
+    // var bandWidth = monthScale.bandwidth();
+    var barHolder = svg.append('g')
+                       .classed('bar-holder', true);
+
+    var bars = barHolder.selectAll('rect.bar')
+             .data(temperatures)
+             .enter()
+             .append('rect')
+             .classed('bar', true)
+             .attr('x', function(d, i) {
+                 return monthScale(new Date(d.onDate));
+             })
+             .attr('width', width)
+             .attr('y', function(d) {
+                 return tempScale(d.temp);
+             })
+             .attr('height', function(d) {
+                 return height - tempScale(d.temp);
+             });
+    // Vertical bars end
+
+    // scales
+    var xAxis = d3.axisBottom(monthScale)
+                  .scale(monthScale);
+                //   .ticks(d3.timeMonths);
+                //   .tickSizeOuter(1);
+    var yAxis = d3.axisLeft(tempScale)
+                  .tickSizeOuter(1);
+
+    svg.append('g')
+       .classed('x axis', true)
+       .attr('transform', 'translate(0,' + height + ')')
+       .call(xAxis);
+
+    var yAxisElement = svg.append('g')
+                          .classed('y axis', true)
+                          .call(yAxis);
+    yAxisElement.append('text')
+                .attr('transform', 'rotate(-90) translate(-' + height / 2 + ', 0)')
+                .style('text-ancher', 'middle')
+                .attr('dy', '-2.5em')
+                .text('Farenheit');
+}
