@@ -8,6 +8,7 @@ class RepositoryController < ApplicationController
   def show
     @repo = @repository.detail(params[:name])
     @commits = @repository.commits(params[:name])
+    @errors = @repository.errors
   end
 
   def d3_graph

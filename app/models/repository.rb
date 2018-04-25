@@ -1,6 +1,9 @@
 class Repository
+  attr_reader :errors
+
   def initialize(user)
     @user = user
+    @errors = []
   end
 
   def list
@@ -13,6 +16,8 @@ class Repository
 
   def commits(name)
     remote_repos(name).commits.list.body
+  rescue Github::Error::GithubError => _e
+    errors.push(I18n.t('repositories.errors.no_commits'))
   end
 
   private

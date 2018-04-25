@@ -34,7 +34,7 @@ en:
   ago: "ago"
   sign_in: "Please Sign In"
   sign_out: "Sign Out"
-  signin_github: "Sign In with Github"
+  sign_in_github: "Sign In with Github"
 
   repositories:
     title: "Repositories"
@@ -52,5 +52,6 @@ en:
     errors:
       no_repository: "Repositories not found. Please create a Repository in your Github account."
       no_description: "Description for this Repository is not given."
+      no_commits: "This repository is either Empty or Commits are not available at this time."
 
 
