@@ -74,3 +74,7 @@ end
 gem 'bootstrap3-datetimepicker-rails'
 gem "font-awesome-rails"
 gem 'momentjs-rails'
+
+# gems for react
+gem 'webpacker'
+gem 'react-rails'

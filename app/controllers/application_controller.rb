@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate
+  layout :set_layout
+  before_action :set_views
 
 
   def current_user
@@ -20,5 +22,13 @@ class ApplicationController < ActionController::Base
   def authenticate
     return true if current_user
     redirect_to login_path
+  end
+
+  def set_layout
+    'react_application'
+  end
+
+  def set_views
+    prepend_view_path "#{Rails.root.join('app', 'views', 'react_views')}"    
   end
 end
