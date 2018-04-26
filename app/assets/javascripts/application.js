@@ -18,6 +18,6 @@
 //= require bootstrap
 //= require moment
 //= require bootstrap-datetimepicker
-//= require vendor/d3.min
+//= require vendor/d3-4.13
 //= require_tree .
 

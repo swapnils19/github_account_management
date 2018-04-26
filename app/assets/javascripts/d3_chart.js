@@ -102,23 +102,17 @@ debugger
 // }
 function initChart() {
     var temperatures = [
-        { temp: 32, onDate: '2011-04-14T16:00:49Z' },
-        { temp: 38, onDate: '2011-04-15T16:00:49Z' },
-        { temp: 47, onDate: '2011-04-16T16:00:49Z' },
-        { temp: 59, onDate: '2011-04-17T16:00:49Z' },
-        { temp: 70, onDate: '2011-04-18T16:00:49Z' },
-        { temp: 80, onDate: '2011-04-19T16:00:49Z' },
-        { temp: 84, onDate: '2011-04-11T16:00:49Z' },
-        { temp: 83, onDate: '2011-04-12T16:00:49Z' },
-        { temp: 76, onDate: '2011-04-13T16:00:49Z' },
-        { temp: 64, onDate: '2011-04-10T16:00:49Z' },
-        { temp: 49, onDate: '2011-04-20T16:00:49Z' },
-        { temp: 99, onDate: '2011-04-21T16:00:49Z' }
+        { temp: 80, onDate: '2016-01-01T16:00:49Z' },
+        { temp: 38, onDate: '2016-02-01T16:00:49Z' },
+        { temp: 47, onDate: '2016-05-01T16:00:49Z' },
+        { temp: 59, onDate: '2017-01-01T16:00:49Z' },
     ];
 
     var months = temperatures.map(function (t) {
         return new Date(t.onDate);
     });
+    var maxDate = Math.max(...months);
+    var minDate = Math.min(...months);
 
     var margin = {
         top: 5,
@@ -141,11 +135,9 @@ function initChart() {
                 .attr('transform', 'translate('+ margin.left + ',' + margin.top + ')');
 
     // Vertical bars
-    // var monthScale = d3.scaleBand()
     var monthScale = d3.scaleTime()
-                       .domain(months)
-                       .range([0, width]);
-                    //    .paddingInner(0.1);
+                       .domain([minDate, maxDate])
+                       .rangeRound([0, width]);
 
     var tempScale = d3.scaleLinear()
                       .domain([0, d3.max(temperatures, function(d) {
@@ -154,7 +146,6 @@ function initChart() {
                       .range([height, 0])
                       .nice();
 
-    // var bandWidth = monthScale.bandwidth();
     var barHolder = svg.append('g')
                        .classed('bar-holder', true);
 
@@ -164,9 +155,10 @@ function initChart() {
              .append('rect')
              .classed('bar', true)
              .attr('x', function(d, i) {
-                 return monthScale(new Date(d.onDate));
+                 ndt = new Date(d.onDate)
+                 return monthScale(ndt.getTime());
              })
-             .attr('width', width)
+             .attr('width', width/months.length)
              .attr('y', function(d) {
                  return tempScale(d.temp);
              })
@@ -177,9 +169,9 @@ function initChart() {
 
     // scales
     var xAxis = d3.axisBottom(monthScale)
-                  .scale(monthScale);
-                //   .ticks(d3.timeMonths);
-                //   .tickSizeOuter(1);
+                  .scale(monthScale)
+                  .ticks(d3.timeWeeks(minDate, maxDate).length)
+                  .tickSizeOuter(1);
     var yAxis = d3.axisLeft(tempScale)
                   .tickSizeOuter(1);
 
