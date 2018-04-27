@@ -101,91 +101,98 @@ debugger
 //     console.log($('.chart').children());
 // }
 function initChart() {
-    var temperatures = [
-        { temp: 80, onDate: '2016-01-01T16:00:49Z' },
-        { temp: 38, onDate: '2016-02-01T16:00:49Z' },
-        { temp: 47, onDate: '2016-05-01T16:00:49Z' },
-        { temp: 59, onDate: '2017-01-01T16:00:49Z' },
+    var parseDate = d3.utcParse("%Y-%m-%dT%H:%M:%SZ");
+
+    var temperatures = [{
+        temp: 80,
+        onDate: '2016-01-01T16:00:49Z'
+    },
+    {
+        temp: 38,
+        onDate: '2016-02-01T16:00:49Z'
+    },
+    {
+        temp: 47,
+        onDate: '2016-05-01T16:00:49Z'
+    },
+    {
+        temp: 59,
+        onDate: '2017-01-01T16:00:49Z'
+    },
     ];
 
-    var months = temperatures.map(function (t) {
-        return new Date(t.onDate);
-    });
-    var maxDate = Math.max(...months);
-    var minDate = Math.min(...months);
+    temperatures.forEach(function (d) {
+        d.onDate = parseDate(d.onDate);
+        console.log(d.onDate)
+        return d;
+    })
 
-    var margin = {
-        top: 5,
-        right: 5,
-        bottom: 50,
-        left: 50
-    };
+    var margin = { top: 25, right: 35, bottom: 25, left: 35, padd: 15 };
 
-    var fullWidth = 700;
-    var fullHeight = 200;
+    var fullWidth = 600;
+    var fullHeight = 250;
 
-    var width  = fullWidth - margin.left - margin.right;
+    var width = fullWidth - margin.left - margin.right;
     var height = fullHeight - margin.bottom - margin.top;
 
-    var svg = d3.select('.chart')
-                .append('svg')
-                .attr('width', fullWidth)
-                .attr('height', fullHeight)
-                .append('g')
-                .attr('transform', 'translate('+ margin.left + ',' + margin.top + ')');
+    var svg = d3.select('.chart').append('svg')
+        .attr('width', fullWidth)
+        .attr('height', fullHeight)
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    // Vertical bars
-    var monthScale = d3.scaleTime()
-                       .domain([minDate, maxDate])
-                       .rangeRound([0, width]);
+    var minDate = d3.min(temperatures, function (d) {
+        return d.onDate.getTime();
+    }),
+        maxDate = d3.max(temperatures, function (d) {
+            return d.onDate.getTime();
+        }),
+        padding = (maxDate - minDate) * .1;
 
-    var tempScale = d3.scaleLinear()
-                      .domain([0, d3.max(temperatures, function(d) {
-                          return d.temp;
-                      })])
-                      .range([height, 0])
-                      .nice();
+    var x = d3.scaleTime()
+        .rangeRound([0, width])
+        .domain([minDate - padding, maxDate + padding]);
 
-    var barHolder = svg.append('g')
-                       .classed('bar-holder', true);
+    var y = d3.scaleLinear()
+        .range([height, 0])
+        .domain([0, d3.max(temperatures, function (d) {
+            return d.temp;
+        })]);
 
-    var bars = barHolder.selectAll('rect.bar')
-             .data(temperatures)
-             .enter()
-             .append('rect')
-             .classed('bar', true)
-             .attr('x', function(d, i) {
-                 ndt = new Date(d.onDate)
-                 return monthScale(ndt.getTime());
-             })
-             .attr('width', width/months.length)
-             .attr('y', function(d) {
-                 return tempScale(d.temp);
-             })
-             .attr('height', function(d) {
-                 return height - tempScale(d.temp);
-             });
-    // Vertical bars end
+    var xAxis = d3.axisBottom(x)
+        .tickSizeOuter(1)
+        .tickFormat(d3.timeFormat("%b")),
+        yAxis = d3.axisLeft(y)
+            .tickSizeOuter(1);
 
-    // scales
-    var xAxis = d3.axisBottom(monthScale)
-                  .scale(monthScale)
-                  .ticks(d3.timeWeeks(minDate, maxDate).length)
-                  .tickSizeOuter(1);
-    var yAxis = d3.axisLeft(tempScale)
-                  .tickSizeOuter(1);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-    svg.append('g')
-       .classed('x axis', true)
-       .attr('transform', 'translate(0,' + height + ')')
-       .call(xAxis);
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 3)
+        .attr("dy", "-0.71em")
+        .attr("fill", "#000")
+        .text("Farenheit");
 
-    var yAxisElement = svg.append('g')
-                          .classed('y axis', true)
-                          .call(yAxis);
-    yAxisElement.append('text')
-                .attr('transform', 'rotate(-90) translate(-' + height / 2 + ', 0)')
-                .style('text-ancher', 'middle')
-                .attr('dy', '-2.5em')
-                .text('Farenheit');
+    var bars = svg.selectAll('.bar')
+        .data(temperatures)
+        .enter()
+        .append('rect')
+        .attr("class", "bar")
+        .attr('width', (width - margin.padd) / (temperatures.length * temperatures.length))
+        .attr('height', function (d) {
+            return height - y(d.temp);
+        })
+        .attr('x', function (d) {
+            return x(d.onDate) - margin.padd
+        })
+        .attr('y', function (d) {
+            return y(d.temp);
+        })
 }
